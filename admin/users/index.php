@@ -25,7 +25,7 @@ $resul=mysqli_query($conn,$sql);
 //-----------------------------------------------------------
       if(isset($_GET['logout'])){
         session_destroy();
-        header('location:/CSE485_1651170912_NguyenThanhGiang-1/');
+        header('location:/CSE485_1651170991_QuanVanTrung/');
       }
   
 ?>
