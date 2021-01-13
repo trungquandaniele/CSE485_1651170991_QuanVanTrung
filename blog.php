@@ -60,22 +60,36 @@
         session_destroy();
         header('location:/CSE485_1651170912_NguyenThanhGiang-1/');
       } 
-      //lay du lieu bang school
-      $sql="select * from school";
-      $school=mysqli_query($conn,$sql);
-      //lay du lieu bang skill
-      $sql="select * from skill";
-      $s=mysqli_query($conn,$sql);
-      //lay du lieu bang can
-      $sql="select * from can";
-      $c=mysqli_query($conn,$sql);
+
       //lay du lieu tai khoan
       $sql="select * from users where userid=123";
       $u1=mysqli_query($conn,$sql);
       $u=mysqli_fetch_assoc($u1);
+// ---------------------------------------------------------------------------
+// $conn= mysqli_connect('localhost','root','','sale');
+// if(!$conn){
+//     echo "ket noi that bai roi";
+// }
+         $sql="select * from post a, type_post b where a.t_id=b.t_id";
+
+         $t="";
+         if(isset($_GET['search'])){
+             $t=$_GET['sea'];
+              $sql='select * from post a, type_post b where a.t_id=b.t_id
+              and (a.title like "%'.$t.'%" or a.body like "%'.$t.'%")';
+          }
+          //chon san pham theo type
+         if(isset($_GET['t_id'])){
+            $v=$_GET['t_id'];
+            $sql="select * from post a, type_post b where a.t_id=b.t_id
+            and a.t_id= $v";
+        }
+         $result=mysqli_query($conn,$sql);
+
+         $sql='select * from type_post';
+         $type=mysqli_query($conn,$sql);
+         $conn->close(); 
 ?>
-
-
 
     <!DOCTYPE html>
     <html lang="en">
@@ -91,18 +105,18 @@
         <link rel="stylesheet" href="asset/css/style.css">
         <title>Thông tin cá nhân</title>
     </head>
-
     <body>
+    
         <div class="nav-bar">
             <nav class="navbar navbar-expand-lg ">
-                <a class="navbar-brand" href="admin/users"><img src="asset/image/ư.webp"  alt=""></a>
+                <a class="navbar-brand" href="#"><img src="asset/image/ư.webp"  alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <div class="fa fa-bars"></div>
             </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#top">TRANG CHỦ</a>
+                            <a class="nav-link" href="index.php">TRANG CHỦ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#about">VỀ TÔI</a>
@@ -143,214 +157,111 @@
                 </div>
             </nav>
         </div>
-        <section id="header">
-            <div class="container text-center">
-                <div class="user-box">
-                    <img src="asset/image/<?php echo $u['avata'] ?>" alt="">
-                    <h3><?php echo $u['last_name']." " ?><?php echo $u['first_name'] ?></h3>
-                    <p>Kĩ sư phát triển website và ứng dụng di động</p>
-                </div>
-            </div>
-            <!-- <div class="scroll-btn">
-                <div class="scroll-bar"><a href="#about"><span></span></a></div>
-            </div> -->
-            <div class="social-icons">
-                <ul>
-                    <a href="#">
-                        <li><i class="fa fa-facebook"></i></li>
-                    </a>
-                    <a href="#">
-                        <li><i class="fa fa-twitter"></i></li>
-                    </a>
-                    <a href="#">
-                        <li><i class="fa fa-medium"></i></li>
-                    </a>
-                    <a href="#">
-                        <li><i class="fa fa-github"></i></li>
-                    </a>
-                    <a href="#">
-                        <li><i class="fa fa-behance"></i></li>
-                    </a>
-                </ul>
-            </div>
-        </section>
-        <p id="about"></p><br>
-        <!-- -------------------------thong tin nguoi------------------------------------ -->
-        <div class="container mt-2 p-3">
-            <!-- <div class="container mt-1"> -->
-            <div class="row pt-3" style="background-color:#F8F9FA;">
-                <div class="col-lg-6">
-                    <h5><b>Thông tin cơ bản</b></h5>
-                    <p><b>Họ và Tên : </b><?php echo $u['last_name']." " ?><?php echo $u['first_name'] ?></p>
-                    <p><b>Năm sinh : </b><?php echo $u['city'] ?></p>
-                    <p><b>Email : </b><?php echo $u['email'] ?></p>
-                    <p><b>Điện thoại : </b><?php echo $u['phone'] ?></p>
-                    <p><b>Địa chỉ : </b><?php echo $u['address1'] ?></p>
-                    <p><b>Ngôn ngữ : </b><?php echo $u['state_country'] ?></p>
-                </div>
-                <div class="col-lg-6 ">
-                    <h5><b> Suy nghĩ của tôi</b></h5>
-                    <p>Lorem ipsum dolor lit simiccusamus fugit debitis adipisci accusantium ipsam dolor, porro nisi nesciunt veritatis itaque! Obcaecati eius sequi, distinctio deserunt aperiam blanditiis, maxime fuga, commodi quod accusantium ad. Culpa
-                        dolores error laboriosam velit eum doloribus architecto inventore quis fugit, sint aspernatur quibusdam magnam perspiciatis voluptate aliquam, voluptates provident pariatur adipisci modi blanditiis autem ea impedit. Hic! expedita
-                        ab in tempora repellat. Voluptas, vero.</p>
-                </div>
-            </div>
-        </div>
-
-        </div>
+        <!-- -------------------------lien he----------------------------- -->
 
 
-
-<!-- <div class="container mt-1"> -->
-        <div class="container bg-light mb-5">
-        <h5 class="text-center p-2 pt-4"><b>KĨ NĂNG</b></h5>
-        <div class="row skills-bar">
-                <?php foreach($s as $key => $v): ?>
-                    <div class="col-lg-6 mb-2">
-                        <p><?php echo $v['k_name'] ?></p>
-                        <div class="progress">
-                            <div class="progress-bar" style='width:<?php echo $v['k_point'] ?>%;'><?php echo $v['k_point'] ?>%</div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-        </div>
-        <p id="resume"></p><br>
-        </div>
-
-        <!-- </div> -->
-        <!-- <div class="resume" id="resume"> -->
-            
-            <div class="container  pt-3" style="background-color:#F8F9FA;">
-                <div class="row pr-4">
-                    <div class="col-md-6">
-                        <h3 class="text-center">Kinh nghiệm làm việc</h3>
-                        <ul class="timeline">
-                            <li>
-                                <h4><span>2020 - </span>FPT</h4>
-                                <p>Lập trình viên ứng dụng quản lý nhân viên SAP dựa trên ngôn ngữ ABAP với cơ sở dữ liệu SQL
-                                    <br>
-                                    <b>Công ty</b> - FPT information system<br>
-                                    <b>Thời gian</b> - 2019 đến 2020<br>
-                                    <b>Địa điểm</b> - Tầng 20 tòa nhà kangname
-                                </p>
-                            </li>
-                            <li>
-                                <h4><span>2017 - </span>Front End Developer</h4>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
-                                    <br>
-                                    <b>Company</b> - xyz company Pvt Ltd<br>
-                                    <b>Duration</b> -1yr [2017 to 2018]<br>
-                                    <b>Location</b> - Bangalore India
-                                </p>
-                            </li>
-                            <li>
-                                <h4><span>2016 - </span>Front End Developer</h4>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
-                                    <br>
-                                    <b>Company</b> - xyz company Pvt Ltd<br>
-                                    <b>Duration</b> -1yr [2017 to 2018]<br>
-                                    <b>Location</b> - Bangalore India
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <h3 class="text-center">Trường học của tôi</h3>
-                        <ul class="timeline">
-                            <?php foreach($school as $key => $v): ?>
-                            <li>
-                                <h4><span><?php echo substr($v['s_date1'],0,4)  ?> - </span>
-                                    <?php echo $v['s_title'] ?>
-                                </h4>
-                                <p>
-                                    <?php echo $v['s_description'] ?>
-                                    <br>
-                                    <b>Trường</b>-
-                                    <?php echo $v['s_name'] ?><br>
-                                    <b>Thời gian</b>
-                                    <?php echo substr($v['s_date1'],0,4)  ?> -
-                                    <?php echo substr($v['s_date2'],0,4)  ?><br>
-                                    <b>Thành tích </b> -
-                                    <?php echo $v['s_place'] ?>
-                                </p>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-
-
-                </div>
-            </div>
-        <!-- </div> -->
-        <!-- ----------------------dich vu----------------------------- -->
-        <!-- <div class="services" id="services">
-            <div class="container">
-                <h1 class="text-center">Công việc mà tôi có thể làm</h1>
-                </p>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-laptop"> </i>
-                            <span>Graphics</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-line-chart"> </i>
-                            <span>Marketting</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-laptop"> </i>
-                            <span>Develpoment</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> -->
-        
-<p id="services"></p>
-<div class="container bg-light mt-5 pt-3 mb-5 pb-4"> 
-<!-- <h5 class="text-center p-2"><b>Công việc mà tôi có thể làm</b></h5> -->
-<h5 class="text-center p-2 pt-4"><b>CÔNG VIỆC MÀ TÔI CÓ THỂ LÀM</b></h5>
-<div class="row">
-<?php foreach($c as $key => $v): ?>
-<div class="col-lg-6">
-<div class="card mb-3" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-4">
-      <img src="asset\image\<?php echo $v['c_image'] ?>" class="card-img" alt="...">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active bg-dark" style="height:90vh">
+      <img class="d-block h-100 mx-auto"  src="asset/image/1610380639-giang.jpg" alt="First slide">
     </div>
-    <div class="col-8">
-      <div class="card-body">
-        <h5 class="card-title"><b><?php echo $v['c_name'] ?></b></h5>
-        <p class="card-text"><?php echo $v['c_body'] ?></p>
-      </div>
+    <div class="carousel-item bg-dark" style="height:90vh">
+      <img class="d-block h-100 mx-auto" src="asset/image/1610380639-giang.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item bg-dark" style="height:90vh">
+      <img class="d-block h-100  mx-auto" src="asset/image/1610380639-giang.jpg" alt="Third slide">
     </div>
   </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
-</div>
-<?php endforeach; ?>
 
 
+        <div class="container">
 
 
-</div>
-     
+            <div class="row mt-4 ">
+                <div class="col-lg-3">
+                    <div class="row">
+                        <h5 class="mx-auto">Loại sản phẩm</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mt-4">
+                            <div class="card" style="width:100%;">
+                                <?php foreach($type as $key =>$value): ?>
+                             
+                                <a class="dropdown-item bg-success border-bottom p-2" href="<?php echo 'blog.php?t_id='.$value['t_id'].'&name='.$value['t_name'] ?>">  <?php echo $value['t_name'] ?></a>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-6 col-6">
+                            <h5>
+                                <?php
+                             if(isset($_GET['search'])){
+                                echo "Kết quả tìm kiếm : ".$result -> num_rows." bài viết";
+                             }
+                             else echo "Danh sách sản phẩm";
+                        ?>
+                            </h5>
+                        </div>
+                        <div class="col-lg-5 col-md-6 col-6">
+                            <form class="d-flex" action="blog.php" method="GET" style="height:45px;">
+                                <input class="form-control me-2 h-100" type="search" name="sea" placeholder="Bạn muốn tìm..." value="<?php if($t!=" "){echo $t;} ?>" aria-label="Search">
+                                <button class="btn btn-outline-success" name="search" type="submit">Tìm</button>
+                            </form>
+                            <!-- <div class="row">
+                                <form class=" form-inline my-2 my-lg-0 w-100 bg-dark row">
+                                  <input class="form-control mr-sm-2 col-8 justify-content-start" type="search" placeholder="Search" aria-label="Search">
+                                  <button class="btn btn-outline-success my-2 my-sm-0 col-4 justify-content-end" type="submit">Search</button>
+                                </form>
+                            </div> -->
+                           
+                        </div>
 
+                    </div>
+                    <div class="row">
+                        <?php foreach($result as $key => $value): ?>
+                        <?php $tt=$value['body'];
+                          if(strlen($tt)>45){
+                          $tt=mb_substr($tt,0,50);
+                          $tt=$tt."...";
+                     }?>
+                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                            <div class="card" style="width:100%;">
+                                <img src="<?php echo "assets/image/".$value['img'] ?>" class="card-img-top" height="145px" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <?php echo $value['title'] ?>
+                                    </h5>
+                                    <p class="card-text">
+                                        <?php echo $tt; ?>
+                                    </p>
+                                    <a href="details.php?id=<?php echo $value['id'] ?>" class="btn btn-success">Chi tiết</a>
+                                </div>
+                            </div>
 
-
-</div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- -------------------------lien he----------------------------- -->
         <div class="contact" id="contact">
@@ -455,12 +366,6 @@
                 </div>
             </div>
         </div>
-
-
-        <script src="asset/js/smooth-scroll.js"></script>
-        <script>
-            var scroll = new SmothScroll('a[href*="#"]');
-        </script>
     </body>
 
     </html>
