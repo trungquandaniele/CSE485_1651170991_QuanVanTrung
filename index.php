@@ -321,19 +321,19 @@
 
                             <div class="form-group">
                                 <label>Tên tài khoản</label>
-                                <input type="text" name="use" class="form-control" placeholder="Enter First Name">
+                                <input type="text" name="use" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>email</label>
-                                <input type="email" name="ema" class="form-control" placeholder="Enter Last Name">
+                                <input type="email" name="ema" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Mật khẩu</label>
-                                <input type="password" name="pas" class="form-control" placeholder="Enter Course">
+                                <input type="password" name="pas" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Nhập lại mật khẩu</label>
-                                <input type="password" name="rep" class="form-control" placeholder="Enter Course">
+                                <input type="password" name="rep" class="form-control" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -366,11 +366,11 @@
 
                             <div class="form-group">
                                 <label> Tài khoản </label>
-                                <input type="text" name="use" class="form-control">
+                                <input type="text" name="use" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label> Mật khẩu </label>
-                                <input type="password" name="pas" class="form-control">
+                                <input type="password" name="pas" class="form-control" required>
                             </div>
                         </div>
                         <div class="modal-footer">
