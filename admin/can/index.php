@@ -92,8 +92,8 @@ $resul=mysqli_query($conn,$sql);
                         <div class="col-2">
                         <img src="..\..\asset\image\<?php  echo $v['c_image'];  ?>" class="w-100" alt="">
                         </div>
-                        <div class="col-1"><a href="edit.php?edi=<?php echo $v['userid'] ?>" style="color:orange">Sửa</a></div>
-                        <div class="col-1"><a href="?del=<?php echo $v['userid'] ?>" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" style="color:red">Xóa</a></div>
+                        <div class="col-1"><a href="edit.php?edi=<?php echo $v['c_id'] ?>" style="color:orange">Sửa</a></div>
+                        <div class="col-1"><a href="?del=<?php echo $v['c_id'] ?>" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" style="color:red">Xóa</a></div>
                     </div>
                     <hr>
                     <?php endforeach; ?>
@@ -107,9 +107,7 @@ $resul=mysqli_query($conn,$sql);
             <!-- ------------------------------------------------------------------------------ -->
         </div>
         <!-- ------------------------------------------------------------------------------ -->
-        <div class="row bg-success p-3">
-            <p>day la chan trang</p>
-        </div>
+        <?php include "../../include/ad_footer.php" ?>
         <script>
             function info() {
                 alert("Bạn có chắc muốn xóa");

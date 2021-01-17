@@ -122,52 +122,7 @@ $resul=mysqli_query($conn,$sql);
 </div>
 <!-- ------------------------------------------------------------------------------ -->
 <!-- </div> -->
-<div class="row bg-success p-3"><p>day la chan trang</p></div>
-
-
-
-
-
-
-
-
-<!--hien thi chi tiet-->
-<!-- <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xem tài khoản</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-                </div>
-
-                <form action="index.php" method="POST">
-                    <div class="modal-body">
-                      <div class="container">
-                        <div class="row"><h6>Tên tài khoản :</h6>  Nguyenthanhgiang</div>
-                        <div class="row"><h6>Tên Email :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Số điện thoại :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Địa chỉ 1 :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Địa chỉ 2 :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Thành phố :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Quốc gia :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Zip-code :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Loại tài khoản :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Trạng thái :</h6> Nguyenthanhgiang</div>
-                        </div>
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-    </div> -->
-
+<?php include "../../include/ad_footer.php" ?>
     <script>
           function info(){
             alert("Bạn có chắc muốn xóa");

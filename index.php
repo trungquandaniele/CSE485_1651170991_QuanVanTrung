@@ -48,6 +48,8 @@
         if(password_verify($pas,$t) && $row["statu"]==1){
           // echo "dung mat khau";
           $_SESSION['use']=$use;
+          $_SESSION['id']=$row["userid"];
+          $_SESSION['adm']=$row["user_level"];
           header("location:admin/users/");
         }else{
           echo $pas."   ".$t;
@@ -58,7 +60,7 @@
       //dang xuat
       if(isset($_GET['logout'])){
         session_destroy();
-        header('location:/CSE485_1651170912_NguyenThanhGiang-1/');
+        header('location:index.php');
       } 
       //lay du lieu bang school
       $sql="select * from school";
@@ -93,67 +95,18 @@
     </head>
 
     <body>
-        <div class="nav-bar">
-            <nav class="navbar navbar-expand-lg ">
-                <a class="navbar-brand" href="admin/users"><img src="asset/image/ư.webp"  alt=""></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <div class="fa fa-bars"></div>
-            </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#top">TRANG CHỦ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">VỀ TÔI</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#resume">TIỂU SỬ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services">DỊCH VỤ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.php">BÀI VIẾT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">LIÊN HỆ</a>
-                        </li>
-                        <?php if(!isset($_SESSION['use'])): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal1">ĐĂNG NHẬP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal">ĐĂNG KÝ</a>
-                        </li>
-                        <?php else: ?>
-                        <ul class="navbar-nav ">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle mr-5 pr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?php echo $_SESSION['use'] ?>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="admin/users/">Trang quản trị</a>
-                                    <a class="dropdown-item" href="?logout">Đăng xuất</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <?php endif;?>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+        <?php include("include/navbar.php") ?>
         <section id="header">
             <div class="container text-center">
                 <div class="user-box">
                     <img src="asset/image/<?php echo $u['avata'] ?>" alt="">
-                    <h3><?php echo $u['last_name']." " ?><?php echo $u['first_name'] ?></h3>
-                    <p>Kĩ sư phát triển website và ứng dụng di động</p>
+                    <h3>
+                        <?php echo $u['last_name']." " ?>
+                        <?php echo $u['first_name'] ?>
+                    </h3>
+                    <p><?php echo $u['address2'] ?></p>
                 </div>
             </div>
-            <!-- <div class="scroll-btn">
-                <div class="scroll-bar"><a href="#about"><span></span></a></div>
-            </div> -->
             <div class="social-icons">
                 <ul>
                     <a href="#">
@@ -181,12 +134,25 @@
             <div class="row pt-3" style="background-color:#F8F9FA;">
                 <div class="col-lg-6">
                     <h5><b>Thông tin cơ bản</b></h5>
-                    <p><b>Họ và Tên : </b><?php echo $u['last_name']." " ?><?php echo $u['first_name'] ?></p>
-                    <p><b>Năm sinh : </b><?php echo $u['city'] ?></p>
-                    <p><b>Email : </b><?php echo $u['email'] ?></p>
-                    <p><b>Điện thoại : </b><?php echo $u['phone'] ?></p>
-                    <p><b>Địa chỉ : </b><?php echo $u['address1'] ?></p>
-                    <p><b>Ngôn ngữ : </b><?php echo $u['state_country'] ?></p>
+                    <p><b>Họ và Tên : </b>
+                        <?php echo $u['last_name']." " ?>
+                        <?php echo $u['first_name'] ?>
+                    </p>
+                    <p><b>Năm sinh : </b>
+                        <?php echo $u['city'] ?>
+                    </p>
+                    <p><b>Email : </b>
+                        <?php echo $u['email'] ?>
+                    </p>
+                    <p><b>Điện thoại : </b>
+                        <?php echo $u['phone'] ?>
+                    </p>
+                    <p><b>Địa chỉ : </b>
+                        <?php echo $u['address1'] ?>
+                    </p>
+                    <p><b>Ngôn ngữ : </b>
+                        <?php echo $u['state_country'] ?>
+                    </p>
                 </div>
                 <div class="col-lg-6 ">
                     <h5><b> Suy nghĩ của tôi</b></h5>
@@ -201,170 +167,130 @@
 
 
 
-<!-- <div class="container mt-1"> -->
+        <!-- <div class="container mt-1"> -->
         <div class="container bg-light mb-5">
-        <h5 class="text-center p-2 pt-4"><b>KĨ NĂNG</b></h5>
-        <div class="row skills-bar">
+            <h5 class="text-center p-2 pt-4"><b>KĨ NĂNG</b></h5>
+            <div class="row skills-bar">
                 <?php foreach($s as $key => $v): ?>
-                    <div class="col-lg-6 mb-2">
-                        <p><?php echo $v['k_name'] ?></p>
-                        <div class="progress">
-                            <div class="progress-bar" style='width:<?php echo $v['k_point'] ?>%;'><?php echo $v['k_point'] ?>%</div>
-                        </div>
+                <div class="col-lg-6 mb-2">
+                    <p>
+                        <?php echo $v['k_name'] ?>
+                    </p>
+                    <div class="progress">
+                        <div class="progress-bar" style='width:<?php echo $v['k_point'] ?>%;'>
+                            <?php echo $v['k_point'] ?>%</div>
                     </div>
+                </div>
                 <?php endforeach; ?>
+            </div>
+            <p id="resume"></p><br>
         </div>
-        <p id="resume"></p><br>
-        </div>
-
-        <!-- </div> -->
-        <!-- <div class="resume" id="resume"> -->
-            
-            <div class="container  pt-3" style="background-color:#F8F9FA;">
-                <div class="row pr-4">
-                    <div class="col-md-6">
-                        <h3 class="text-center">Kinh nghiệm làm việc</h3>
-                        <ul class="timeline">
-                            <li>
-                                <h4><span>2020 - </span>FPT</h4>
-                                <p>Lập trình viên ứng dụng quản lý nhân viên SAP dựa trên ngôn ngữ ABAP với cơ sở dữ liệu SQL
-                                    <br>
-                                    <b>Công ty</b> - FPT information system<br>
-                                    <b>Thời gian</b> - 2019 đến 2020<br>
-                                    <b>Địa điểm</b> - Tầng 20 tòa nhà kangname
-                                </p>
-                            </li>
-                            <li>
-                                <h4><span>2017 - </span>Front End Developer</h4>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
-                                    <br>
-                                    <b>Company</b> - xyz company Pvt Ltd<br>
-                                    <b>Duration</b> -1yr [2017 to 2018]<br>
-                                    <b>Location</b> - Bangalore India
-                                </p>
-                            </li>
-                            <li>
-                                <h4><span>2016 - </span>Front End Developer</h4>
-                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
-                                    <br>
-                                    <b>Company</b> - xyz company Pvt Ltd<br>
-                                    <b>Duration</b> -1yr [2017 to 2018]<br>
-                                    <b>Location</b> - Bangalore India
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <h3 class="text-center">Trường học của tôi</h3>
-                        <ul class="timeline">
-                            <?php foreach($school as $key => $v): ?>
-                            <li>
-                                <h4><span><?php echo substr($v['s_date1'],0,4)  ?> - </span>
-                                    <?php echo $v['s_title'] ?>
-                                </h4>
-                                <p>
-                                    <?php echo $v['s_description'] ?>
-                                    <br>
-                                    <b>Trường</b>-
-                                    <?php echo $v['s_name'] ?><br>
-                                    <b>Thời gian</b>
-                                    <?php echo substr($v['s_date1'],0,4)  ?> -
-                                    <?php echo substr($v['s_date2'],0,4)  ?><br>
-                                    <b>Thành tích </b> -
-                                    <?php echo $v['s_place'] ?>
-                                </p>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-
-
+        <div class="container  pt-3" style="background-color:#F8F9FA;">
+            <div class="row pr-4">
+                <div class="col-md-6">
+                    <h3 class="text-center">Kinh nghiệm làm việc</h3>
+                    <ul class="timeline">
+                        <li>
+                            <h4><span>2020 - </span>FPT</h4>
+                            <p>Lập trình viên ứng dụng quản lý nhân viên SAP dựa trên ngôn ngữ ABAP với cơ sở dữ liệu SQL
+                                <br>
+                                <b>Công ty</b> - FPT information system<br>
+                                <b>Thời gian</b> - 2019 đến 2020<br>
+                                <b>Địa điểm</b> - Tầng 20 tòa nhà kangname
+                            </p>
+                        </li>
+                        <li>
+                            <h4><span>2017 - </span>Front End Developer</h4>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
+                                <br>
+                                <b>Company</b> - xyz company Pvt Ltd<br>
+                                <b>Duration</b> -1yr [2017 to 2018]<br>
+                                <b>Location</b> - Bangalore India
+                            </p>
+                        </li>
+                        <li>
+                            <h4><span>2016 - </span>Front End Developer</h4>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis culpa maxime repellat voluptatibus error delectus ut enim sapiente fuga placeat.
+                                <br>
+                                <b>Company</b> - xyz company Pvt Ltd<br>
+                                <b>Duration</b> -1yr [2017 to 2018]<br>
+                                <b>Location</b> - Bangalore India
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-center">Trường học của tôi</h3>
+                    <ul class="timeline">
+                        <?php foreach($school as $key => $v): ?>
+                        <li>
+                            <h4><span><?php echo substr($v['s_date1'],0,4)  ?> - </span>
+                                <?php echo $v['s_title'] ?>
+                            </h4>
+                            <p>
+                                <?php echo $v['s_description'] ?>
+                                <br>
+                                <b>Trường</b>-
+                                <?php echo $v['s_name'] ?><br>
+                                <b>Thời gian</b>
+                                <?php echo substr($v['s_date1'],0,4)  ?> -
+                                <?php echo substr($v['s_date2'],0,4)  ?><br>
+                                <b>Thành tích </b> -
+                                <?php echo $v['s_place'] ?>
+                            </p>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
             </div>
-        <!-- </div> -->
-        <!-- ----------------------dich vu----------------------------- -->
-        <!-- <div class="services" id="services">
-            <div class="container">
-                <h1 class="text-center">Công việc mà tôi có thể làm</h1>
-                </p>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-laptop"> </i>
-                            <span>Graphics</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
+        </div>
+<!-- //--------------------------------------------------------------------------- -->
+        <p id="services"></p>
+        <div class="container bg-light mt-5 pt-3 mb-5 pb-4">
+            <!-- <h5 class="text-center p-2"><b>Công việc mà tôi có thể làm</b></h5> -->
+            <h5 class="text-center p-2 pt-4"><b>CÔNG VIỆC MÀ TÔI CÓ THỂ LÀM</b></h5>
+            <div class="row">
+                <?php foreach($c as $key => $v): ?>
+                <div class="col-lg-6">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-4">
+                                <img src="asset\image\<?php echo $v['c_image'] ?>"  class="card-img h-100" alt="...">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b><?php echo $v['c_name'] ?></b></h5>
+                                    <p class="card-text">
+                                        <?php echo $v['c_body'] ?>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-line-chart"> </i>
-                            <span>Marketting</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="services-box">
-                            <i class="fa fa-laptop"> </i>
-                            <span>Develpoment</span>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A soluta, sit deserunt delectus ut dicta autem eius ab obcaecati illo, ipsam perspiciatis dolores cupiditate labore nesciunt ex id temporibus? Odio.</p>
-
-                        </div>
-                    </div>
-
                 </div>
+                <?php endforeach; ?>
             </div>
-        </div> -->
-        
-<p id="services"></p>
-<div class="container bg-light mt-5 pt-3 mb-5 pb-4"> 
-<!-- <h5 class="text-center p-2"><b>Công việc mà tôi có thể làm</b></h5> -->
-<h5 class="text-center p-2 pt-4"><b>CÔNG VIỆC MÀ TÔI CÓ THỂ LÀM</b></h5>
-<div class="row">
-<?php foreach($c as $key => $v): ?>
-<div class="col-lg-6">
-<div class="card mb-3" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-4">
-      <img src="asset\image\<?php echo $v['c_image'] ?>" class="card-img" alt="...">
-    </div>
-    <div class="col-8">
-      <div class="card-body">
-        <h5 class="card-title"><b><?php echo $v['c_name'] ?></b></h5>
-        <p class="card-text"><?php echo $v['c_body'] ?></p>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<?php endforeach; ?>
-
-
-
-
-</div>
-     
-
-
-
-</div>
+        </div>
 
         <!-- -------------------------lien he----------------------------- -->
         <div class="contact" id="contact">
             <div class="container text-center">
                 <h1>liên hệ với tôi</h1>
-                <p>Chúng tôi tiếp tục cải thiện nội dung và dịch vụ của mình để làm cho trang web của tôi dễ truy cập hơn cho mọi người. Nếu bạn gặp sự cố khi sử dụng trang web của chúng tôi, vui lòng liên hệ với Quản trị viên web để được trợ giúp ở phần dươí</p>
+                <p>Chúng tôi tiếp tục cải thiện nội dung và dịch vụ của mình để làm cho trang web của tôi dễ truy cập hơn cho mọi người. Nếu bạn gặp sự cố khi sử dụng trang web của chúng tôi, vui lòng liên hệ với Quản trị viên web để được trợ giúp ở phần
+                    dươí
+                </p>
                 <div class="row">
                     <div class="col-md-4">
                         <i class="fa fa-phone"></i>
-                        <p>+1 <?php echo $u['phone'] ?></p>
+                        <p>+1
+                            <?php echo $u['phone'] ?>
+                        </p>
                     </div>
                     <div class="col-md-4">
                         <i class="fa fa-envelope"></i>
-                        <p><?php echo $u['email'] ?></p>
+                        <p>
+                            <?php echo $u['email'] ?>
+                        </p>
                     </div>
                     <div class="col-md-4">
                         <i class="fa fa-internet-explorer"></i>
@@ -455,8 +381,6 @@
                 </div>
             </div>
         </div>
-
-
         <script src="asset/js/smooth-scroll.js"></script>
         <script>
             var scroll = new SmothScroll('a[href*="#"]');

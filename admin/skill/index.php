@@ -106,9 +106,7 @@ $resul=mysqli_query($conn,$sql);
             <!-- ------------------------------------------------------------------------------ -->
         </div>
         <!-- ------------------------------------------------------------------------------ -->
-        <div class="row bg-success p-3">
-            <p>day la chan trang</p>
-        </div>
+        <?php include "../../include/ad_footer.php" ?>
         <script>
             function info() {
                 alert("Bạn có chắc muốn xóa");

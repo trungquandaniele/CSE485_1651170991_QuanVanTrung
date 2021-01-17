@@ -67,13 +67,13 @@ $u1=mysqli_query($conn,$sql);
 $u=mysqli_fetch_assoc($u1);
 // -------------------------------------------
 $v=$_GET['id'];
-$sql="select * from post where id=$v";
+// $sql="select * from post where id=$v";
+$sql= "select * from post,users,type_post WHERE post.u_id=users.userid and post.t_id=type_post.t_id and post.id=$v";
 $result=mysqli_query($conn,$sql);
 $view=mysqli_fetch_assoc($result);
 // -----------------------
 $tt=$view['t_id'];
          $sql="select * from post a, type_post b where a.t_id=b.t_id and a.t_id=$tt";
-
          $t="";
          if(isset($_GET['search'])){
              $t=$_GET['sea'];
@@ -89,6 +89,9 @@ $tt=$view['t_id'];
          $result=mysqli_query($conn,$sql);
          $sql='select * from type_post';
          $type=mysqli_query($conn,$sql);
+//-----------------------------------------
+         $sql="select * from post";
+         $resul=mysqli_query($conn,$sql);
   
          $conn->close(); 
 ?>
@@ -108,61 +111,11 @@ $tt=$view['t_id'];
     </head>
 
     <body>
-    <div class="nav-bar">
-            <nav class="navbar navbar-expand-lg ">
-                <a class="navbar-brand" href="#"><img src="asset/image/ư.webp"  alt=""></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <div class="fa fa-bars"></div>
-            </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">TRANG CHỦ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">VỀ TÔI</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#resume">TIỂU SỬ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services">DỊCH VỤ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.php">BÀI VIẾT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">LIÊN HỆ</a>
-                        </li>
-                        <?php if(!isset($_SESSION['use'])): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal1">ĐĂNG NHẬP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal">ĐĂNG KÝ</a>
-                        </li>
-                        <?php else: ?>
-                        <ul class="navbar-nav ">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle mr-5 pr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?php echo $_SESSION['use'] ?>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="admin/users/">Trang quản trị</a>
-                                    <a class="dropdown-item" href="?logout">Đăng xuất</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <?php endif;?>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+    <?php include("include/navbar.php") ?>
 
 
 
-
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -170,14 +123,14 @@ $tt=$view['t_id'];
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active bg-dark" style="height:90vh">
-      <img class="d-block h-100 mx-auto"  src="asset/image/1610380639-giang.jpg" alt="First slide">
+      <img class="d-block h-100 mx-auto"  src="asset/image/1610629703-nhieuthietbi.jpg" alt="First slide">
     </div>
+    <?php foreach($resul as $key => $value): ?>
     <div class="carousel-item bg-dark" style="height:90vh">
-      <img class="d-block h-100 mx-auto" src="asset/image/1610380639-giang.jpg" alt="Second slide">
+      <img class="d-block h-100 mx-auto" src="asset/image/<?php echo $value['img'] ?>" alt="Second slide">
     </div>
-    <div class="carousel-item bg-dark" style="height:90vh">
-      <img class="d-block h-100  mx-auto" src="asset/image/1610380639-giang.jpg" alt="Third slide">
-    </div>
+    <?php endforeach;?>
+
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -196,7 +149,7 @@ $tt=$view['t_id'];
             <div class="row mt-4">
             <div class="col-lg-3">
                     <div class="row">
-                        <h5 class="mx-auto">Loại sản phẩm</h5>
+                        <h5 class="mx-auto">Loại bài</h5>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 mt-4">
@@ -218,7 +171,6 @@ $tt=$view['t_id'];
                              if(isset($_GET['search'])){
                                 echo "Kết quả tìm kiếm : ".$result -> num_rows." bài viết";
                              }
-                            //  else echo "<b>Chi tiết bài viết </b>";
                         ?>
                             </h5>
                         </div>
@@ -233,7 +185,7 @@ $tt=$view['t_id'];
 
                     <h5 class="mt-4 btn-success p-1"><b>Thông tin bài viết</b></h5>
                     <div class="row mt-4">
-                        <div class="col-6"><img src="asset\image\1610380585-giang.jpg" class="w-100" alt=""></div>
+                        <div class="col-6"><img src="asset\image\<?php echo $view['img']; ?>" class="w-100" alt=""></div>
                         <div class="col-6">
                             <div class="row">
                                 <div class="col">
@@ -243,7 +195,7 @@ $tt=$view['t_id'];
                             </div>
                             <div class="row mt-2 mb-2">
                                 <div class="col">
-                                    <?php echo "<b>Nội dung : </b>".$view['body']; ?>
+                                    <?php echo "<b>Tác giả : </b>".$view['username']; ?>
                                 </div>
                                 <!-- ------------------------- -->
                             </div>
@@ -265,16 +217,18 @@ $tt=$view['t_id'];
 
 
                     <h5 class="mt-4 btn-success p-1"><b>Những bài viết liên quan</b></h5>
-                       <div class="row">
+                       <div class="row mb-5">
                         <?php foreach($result as $key => $value): ?>
                         <?php $tt=$value['body'];
                           if(strlen($tt)>45){
                           $tt=mb_substr($tt,0,50);
                           $tt=$tt."...";
-                     }?>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
+                     }
+                     if($v!=$value['id']):
+                     ?>
+                        <div class="col-lg-4 col-md-4 col-sm-6 mb-2">
                             <div class="card" style="width:100%;">
-                                <img src="<?php echo "assets/image/".$value['img'] ?>" class="card-img-top" height="145px" alt="...">
+                                <img src="<?php echo "asset/image/".$value['img'] ?>" class="card-img-top" height="145px" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <?php echo $value['title'] ?>
@@ -287,7 +241,9 @@ $tt=$view['t_id'];
                             </div>
 
                         </div>
-                        <?php endforeach; ?>
+                        <?php 
+                           endif;
+                          endforeach; ?>
                     </div>
 
 

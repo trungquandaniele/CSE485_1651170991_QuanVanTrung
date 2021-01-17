@@ -70,7 +70,35 @@
 // if(!$conn){
 //     echo "ket noi that bai roi";
 // }
-         $sql="select * from post a, type_post b where a.t_id=b.t_id";
+        //  $sql="select * from post a, type_post b where a.t_id=b.t_id";
+
+    
+
+       //lay the loai
+          $sql='select * from type_post';
+          $type=mysqli_query($conn,$sql);
+          //chon san pham theo type
+   
+
+        
+   //    --------------------lay ra bai viet -------------------------
+         $sql="select * from post";
+         $resul=mysqli_query($conn,$sql);
+   
+            // $result=mysqli_query($conn,$sql);
+            // $sql="select * from post";
+      //    ---------------------------------------------
+      $resul=mysqli_query($conn,$sql);
+//----------------------lay anh carousel------------------------------
+            if(isset($_GET['t_id'])){
+            $v=$_GET['t_id'];
+            $sql="select * from post a, type_post b where a.t_id=b.t_id
+            and a.t_id= $v";
+        }
+         $resul=mysqli_query($conn,$sql);
+
+
+
 
          $t="";
          if(isset($_GET['search'])){
@@ -78,17 +106,10 @@
               $sql='select * from post a, type_post b where a.t_id=b.t_id
               and (a.title like "%'.$t.'%" or a.body like "%'.$t.'%")';
           }
-          //chon san pham theo type
-         if(isset($_GET['t_id'])){
-            $v=$_GET['t_id'];
-            $sql="select * from post a, type_post b where a.t_id=b.t_id
-            and a.t_id= $v";
-        }
-         $result=mysqli_query($conn,$sql);
+          $resul=mysqli_query($conn,$sql);
 
-         $sql='select * from type_post';
-         $type=mysqli_query($conn,$sql);
-         $conn->close(); 
+      $conn->close(); 
+
 ?>
 
     <!DOCTYPE html>
@@ -106,57 +127,7 @@
         <title>Thông tin cá nhân</title>
     </head>
     <body>
-    
-        <div class="nav-bar">
-            <nav class="navbar navbar-expand-lg ">
-                <a class="navbar-brand" href="#"><img src="asset/image/ư.webp"  alt=""></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <div class="fa fa-bars"></div>
-            </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">TRANG CHỦ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">VỀ TÔI</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#resume">TIỂU SỬ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services">DỊCH VỤ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.php">BÀI VIẾT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">LIÊN HỆ</a>
-                        </li>
-                        <?php if(!isset($_SESSION['use'])): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal1">ĐĂNG NHẬP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal">ĐĂNG KÝ</a>
-                        </li>
-                        <?php else: ?>
-                        <ul class="navbar-nav ">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle mr-5 pr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?php echo $_SESSION['use'] ?>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="admin/users/">Trang quản trị</a>
-                                    <a class="dropdown-item" href="?logout">Đăng xuất</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <?php endif;?>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+       <?php include("include/navbar.php") ?>
         <!-- -------------------------lien he----------------------------- -->
 
 
@@ -168,14 +139,14 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active bg-dark" style="height:90vh">
-      <img class="d-block h-100 mx-auto"  src="asset/image/1610380639-giang.jpg" alt="First slide">
+      <img class="d-block h-100 mx-auto"  src="asset/image/1610631288-toancau.jpg" alt="First slide">
     </div>
+    <?php foreach($resul as $key => $value): ?>
     <div class="carousel-item bg-dark" style="height:90vh">
-      <img class="d-block h-100 mx-auto" src="asset/image/1610380639-giang.jpg" alt="Second slide">
+      <img class="d-block h-100 mx-auto" src="asset/image/<?php echo $value['img'] ?>" alt="Second slide">
     </div>
-    <div class="carousel-item bg-dark" style="height:90vh">
-      <img class="d-block h-100  mx-auto" src="asset/image/1610380639-giang.jpg" alt="Third slide">
-    </div>
+    <?php endforeach;?>
+
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -194,14 +165,14 @@
             <div class="row mt-4 ">
                 <div class="col-lg-3">
                     <div class="row">
-                        <h5 class="mx-auto">Loại sản phẩm</h5>
+                        <h5 class="mx-auto"><b> Loại bài</b> </h5>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 mt-4">
                             <div class="card" style="width:100%;">
                                 <?php foreach($type as $key =>$value): ?>
                              
-                                <a class="dropdown-item bg-success border-bottom p-2" href="<?php echo 'blog.php?t_id='.$value['t_id'].'&name='.$value['t_name'] ?>">  <?php echo $value['t_name'] ?></a>
+                                <a class="btn btn-success border-bottom p-2" href="<?php echo 'blog.php?t_id='.$value['t_id'].'&name='.$value['t_name'] ?>">  <?php echo $value['t_name'] ?></a>
                                 <?php endforeach; ?>
                             </div>
                             
@@ -214,9 +185,13 @@
                             <h5>
                                 <?php
                              if(isset($_GET['search'])){
-                                echo "Kết quả tìm kiếm : ".$result -> num_rows." bài viết";
+                                echo "<b>Kết quả tìm kiếm : ".$resul -> num_rows." bài viết</b>";
                              }
-                             else echo "Danh sách sản phẩm";
+                             else if(isset($_GET['name'])){
+                                 $hh=$_GET['name'];
+                                echo "<b>Tin $hh</b>";
+                             }
+                             else echo "<b>Danh sách bài viết</b>";
                         ?>
                             </h5>
                         </div>
@@ -236,7 +211,7 @@
 
                     </div>
                     <div class="row">
-                        <?php foreach($result as $key => $value): ?>
+                        <?php foreach($resul as $key => $value): ?>
                         <?php $tt=$value['body'];
                           if(strlen($tt)>45){
                           $tt=mb_substr($tt,0,50);
@@ -244,7 +219,7 @@
                      }?>
                         <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
                             <div class="card" style="width:100%;">
-                                <img src="<?php echo "assets/image/".$value['img'] ?>" class="card-img-top" height="145px" alt="...">
+                                <img src="<?php echo "asset/image/".$value['img'] ?>" class="card-img-top" height="145px" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         <?php echo $value['title'] ?>
@@ -258,11 +233,16 @@
 
                         </div>
                         <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        
+                       
 
+                    </div>
+                   
+                </div>   
+            </div>
+         
+        </div>
+       
         <!-- -------------------------lien he----------------------------- -->
         <div class="contact" id="contact">
             <div class="container text-center">

@@ -105,6 +105,6 @@ include("../../include/ad_session.php");
 </div>
 <!-- ------------------------------------------------------------------------------ -->
 <!-- </div> -->
-<div class="row bg-success p-3"><p>day la chan trang</p></div>
+<?php include "../../include/ad_footer.php" ?>
   </body>
 </html>

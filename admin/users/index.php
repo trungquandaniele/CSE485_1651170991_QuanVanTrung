@@ -3,7 +3,10 @@
 //--------------------------------------------------
    if(isset($_GET['del'])){
     $id=$_GET['del'];
+    $sql="delete from post where u_id=$id";
+    $resul=mysqli_query($conn,$sql);
     $sql="delete from users where userid=$id";
+    // echo $sql;
     $resul=mysqli_query($conn,$sql);
    }
 //--------------------------------------------------
@@ -25,7 +28,7 @@ $resul=mysqli_query($conn,$sql);
 //-----------------------------------------------------------
       if(isset($_GET['logout'])){
         session_destroy();
-        header('location:/CSE485_1651170991_QuanVanTrung/');
+        header('location:../../');
       }
   
 ?>
@@ -95,7 +98,7 @@ $resul=mysqli_query($conn,$sql);
                         <div class="col-1"><a href="view.php?edi=<?php echo $v['userid'] ?>" style="color:green">Xem</a></div>
                         <!-- <a class="nav-link" data-toggle="modal" data-target="#studentaddmodal">ĐĂNG KÝ</a> -->
                         <div class="col-1"><a href="edit.php?edi=<?php echo $v['userid'] ?>" style="color:orange">Sửa</a></div>
-                        <div class="col-1"><a href="?del=<?php echo $v['userid'] ?>" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?');" style="color:red">Xóa</a></div>
+                        <div class="col-1"><a href="?del=<?php echo $v['userid'] ?>" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này, và các bài viết của họ ?');" style="color:red">Xóa</a></div>
                     </div>
                     <hr>
                     <?php endforeach; ?>
@@ -109,9 +112,7 @@ $resul=mysqli_query($conn,$sql);
             <!-- ------------------------------------------------------------------------------ -->
         </div>
         <!-- ------------------------------------------------------------------------------ -->
-        <div class="row bg-success p-3">
-            <p>day la chan trang</p>
-        </div>
+        <?php include "../../include/ad_footer.php" ?>
         <script>
             function info() {
                 alert("Bạn có chắc muốn xóa");
@@ -120,3 +121,7 @@ $resul=mysqli_query($conn,$sql);
     </body>
 
     </html>
+
+
+
+    $conn= mysqli_connect('localhost','id15672786_root','12091997aA@@','id15672786_sale');

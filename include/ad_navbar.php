@@ -1,6 +1,6 @@
      <div class="nav-bar">
             <nav class="navbar navbar-expand-lg ">
-                <a class="navbar-brand" href="/CSE485_1651170912_NguyenThanhGiang-1/index.php"><img src="../../asset/image/ư.webp" alt=""></a>
+                <!-- <a class="navbar-brand" href="/CSE485_1651170912_NguyenThanhGiang-1/index.php"><img src="../../asset/image/ư.webp" alt=""></a> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <div class="fa fa-bars"></div>
             </button>
@@ -17,10 +17,11 @@
                         <ul class="navbar-nav ">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle mr-5 pr-3" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <?php echo $_SESSION['use'] ?>
+                                <i class="fa fa-user" aria-hidden="true" style="color:white;"></i>   
+                                <?php echo $_SESSION['use'] ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/CSE485_1651170912_NguyenThanhGiang-1/index.php">Trang chủ</a>
+                                    <a class="dropdown-item" href="../../index.php">Trang chủ</a>
                                     <a class="dropdown-item" href="?logout">Đăng xuất</a>
                                 </div>
                             </li>

@@ -3,7 +3,9 @@ include("../../include/ad_session.php");
 //--------------------------------------------------
    if(isset($_GET['del'])){
     $id=$_GET['del'];
-    $sql="delete from school where  s_id=$id";
+    $sql="delete from post where  t_id=$id";
+    $resul=mysqli_query($conn,$sql);
+    $sql="delete from type_post where  t_id=$id";
     $resul=mysqli_query($conn,$sql);
    }
 //--------------------------------------------------
@@ -13,7 +15,7 @@ include("../../include/ad_session.php");
 //     $vie=mysqli_query($conn,$sql);
 //    }
 //--------------------------------------------------
-   $sql="select * from school";
+   $sql="select * from type_post";
    $resul=mysqli_query($conn,$sql);
 //    ---------------------------------------------
 // $sql="select * from users";
@@ -31,13 +33,13 @@ include("../../include/ad_session.php");
       $item=10;
       $pages=ceil($total/$item);
       // echo "============".$pages;
-      $sql="select * from school limit 10";
+      $sql="select * from type_post limit 10";
 if(isset($_GET['item'])){
 // $item=$_GET['item'];
 // $pages=ceil($total/$item);
 $page=$_GET['page'];
 $off=($page-1)*$item; 
-$sql="select * from school limit $item offset $off";
+$sql="select * from type_post limit $item offset $off";
 // if(isset($_SESSION['loc'])){
 // $sql="select * from users  where status=1 limit $item offset $off";
 }
@@ -92,22 +94,17 @@ $resul=mysqli_query($conn,$sql);
         <div class="col-1"><h6>Id</h6></div>
         <div class="col-2"><h6>Tên</h6></div>
         <!-- <div class="col-3"><h6>Miêu tả</h6></div> -->
-        <div class="col-3"><h6>Thành tích</h6></div>
-        <div class="col-2"><h6>Ngày vào</h6></div>
-        <div class="col-2"><h6>Ngày ra</h6></div>
+        <div class="col-5"><h6>Mô tả</h6></div>
         <div class="col-2"><h6>Thao tác</h6></div>
     </div><hr>
     <?php foreach($resul as $key => $v): ?>
     <div class="row">
-        <div class="col-1"><h6><?php echo $v['s_id'] ?></h6></div>
-        <div class="col-2"><h6><?php echo $v['s_name'] ?></h6></div>
+        <div class="col-1"><h6><?php echo $v['t_id'] ?></h6></div>
+        <div class="col-2"><h6><?php echo $v['t_name'] ?></h6></div>
  
-        <div class="col-3"><h6><?php echo $v['s_place'] ?></h6></div>
-        <div class="col-2"><h6><?php echo $v['s_date1'] ?></h6></div>
-        <div class="col-2"><h6><?php echo $v['s_date2'] ?></h6></div>
-        <!-- <div class="col-2"><h6>Thao tác</h6></div> -->
-        <div class="col-1"><a href="edit.php?edi=<?php echo $v['s_id'] ?>" style="color:orange">Sửa</a></div>
-        <div class="col-1"><a href="?del=<?php echo $v['s_id'] ?>" onclick="return confirm('Bạn có chắc muốn xóa trường học này?');" style="color:red">Xóa</a></div>
+        <div class="col-5"><h6><?php echo $v['t_des'] ?></h6></div>
+        <div class="col-1"><a href="edit.php?edi=<?php echo $v['t_id'] ?>" style="color:orange">Sửa</a></div>
+        <div class="col-1"><a href="?del=<?php echo $v['t_id'] ?>" onclick="return confirm('Bạn có chắc muốn xóa thể loại này?');" style="color:red">Xóa</a></div>
         
     </div><hr>
     <?php endforeach; ?>
@@ -122,52 +119,7 @@ $resul=mysqli_query($conn,$sql);
 </div>
 <!-- ------------------------------------------------------------------------------ -->
 <!-- </div> -->
-<div class="row bg-success p-3"><p>day la chan trang</p></div>
-
-
-
-
-
-
-
-
-<!--hien thi chi tiet-->
-<!-- <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xem tài khoản</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-                </div>
-
-                <form action="index.php" method="POST">
-                    <div class="modal-body">
-                      <div class="container">
-                        <div class="row"><h6>Tên tài khoản :</h6>  Nguyenthanhgiang</div>
-                        <div class="row"><h6>Tên Email :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Số điện thoại :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Địa chỉ 1 :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Địa chỉ 2 :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Thành phố :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Quốc gia :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Zip-code :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Loại tài khoản :</h6> Nguyenthanhgiang</div>
-                        <div class="row"><h6>Trạng thái :</h6> Nguyenthanhgiang</div>
-                        </div>
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-    </div> -->
-
+<?php include "../../include/ad_footer.php" ?>
     <script>
           function info(){
             alert("Bạn có chắc muốn xóa");
