@@ -51,11 +51,11 @@
 <form  action="create.php" method="post" >
   <div class="form-group mt-2">
     <label for="exampleInputEmail1">Tên kĩ năng</label>
-    <input type="text" class="form-control" name="c_name" aria-describedby="emailHelp" value="<?php echo $name ?>">
+    <input type="text" class="form-control" name="c_name" aria-describedby="emailHelp" value="<?php echo $name ?>" required>
   </div>
 <div class="form-group mt-2">
     <label for="exampleInputEmail1">Điểm số</label>
-    <input type="number" class="form-control" name="c_place" aria-describedby="emailHelp" value="<?php echo $place ?>">
+    <input type="number" class="form-control" name="c_place" aria-describedby="emailHelp" value="<?php echo $place ?>" required>
   </div>
   <input type="submit" class="btn btn-primary mt-2 mb-4" name="submit" value="Submit"></input>
 </form>

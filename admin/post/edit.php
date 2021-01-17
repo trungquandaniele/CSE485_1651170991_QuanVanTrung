@@ -92,11 +92,11 @@
                         </div>
                         <div class="form-group mt-2">
                             <label for="validationDefault01">Tiêu đề</label>
-                            <input type="text" class="form-control" name="title" id="validationDefault01" placeholder="..." value="<?php echo $r['title'] ?>">
+                            <input type="text" class="form-control" name="title" id="validationDefault01" placeholder="..." value="<?php echo $r['title'] ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Nội dung</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" name="body"  rows="10"><?php echo $r['body'] ?></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="body"  rows="10" required><?php echo $r['body'] ?></textarea>
                         </div>
                         <div class="form-group">
                             <label>Chọn thể loại</label>

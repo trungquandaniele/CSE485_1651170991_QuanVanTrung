@@ -74,27 +74,27 @@ include("../../include/ad_session.php");
 <form  action="edit.php" method="post" >
   <div class="form-group mt-2">
     <label for="exampleInputEmail1">Tên trường</label>
-    <input type="text" class="form-control" name="c_name" aria-describedby="emailHelp" value="<?php echo $r['s_name'] ?>">
+    <input type="text" class="form-control" name="c_name" aria-describedby="emailHelp" value="<?php echo $r['s_name'] ?>" required>
   </div>
   <div class="form-group mt-2">
     <label for="exampleInputEmail1">Học về</label>
-    <input type="text" class="form-control" name="c_title" aria-describedby="emailHelp" value="<?php echo $r['s_title'] ?>">
+    <input type="text" class="form-control" name="c_title" aria-describedby="emailHelp" value="<?php echo $r['s_title'] ?>" required>
   </div>
   <div class="form-group mt-2">
   <label for="floatingTextarea2">Chuyên về</label>
-  <textarea class="form-control" placeholder="Viết mô tả sản phẩm" name="c_des" id="floatingTextarea2" style="height: 100px; "><?php echo $r['s_description'] ?></textarea>
+  <textarea class="form-control" placeholder="Viết mô tả sản phẩm" name="c_des" id="floatingTextarea2" style="height: 100px; " required><?php echo $r['s_description'] ?></textarea>
 </div> 
 <div class="form-group mt-2">
     <label for="exampleInputEmail1">Thành tích</label>
-    <input type="text" class="form-control" name="c_place" aria-describedby="emailHelp" value="<?php echo $r['s_place'] ?>">
+    <input type="text" class="form-control" name="c_place" aria-describedby="emailHelp" value="<?php echo $r['s_place'] ?>" required>
   </div>
   <div class="form-group mt-2">
     <label for="exampleInputEmail1">Ngày bắt đầu</label>
-    <input type="date" class="form-control" name="c_date1" aria-describedby="emailHelp" value="<?php echo $r['s_date1'] ?>">
+    <input type="date" class="form-control" name="c_date1" aria-describedby="emailHelp" value="<?php echo $r['s_date1'] ?>" required>
   </div>
   <div class="form-group mt-2">
     <label for="exampleInputEmail1">Ngày kết thúc</label>
-    <input type="date" class="form-control" name="c_date2" aria-describedby="emailHelp" value="<?php echo $r['s_date2'] ?>">
+    <input type="date" class="form-control" name="c_date2" aria-describedby="emailHelp" value="<?php echo $r['s_date2'] ?>" required>
   </div>
 
   <input type="submit" class="btn btn-primary mt-2 mb-4" name="submit" value="Submit"></input>

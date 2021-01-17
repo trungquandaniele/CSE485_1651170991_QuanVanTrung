@@ -26,7 +26,14 @@
                                 </div>
                             </li>
                         </ul>
-                        <?php endif;?>
+                        <?php endif;
+                          //dang xuat
+      if(isset($_GET['logout'])){
+        session_destroy();
+        header('location:../../');
+      } 
+                        ?>
+                        
                     </ul>
                 </div>
             </nav>
